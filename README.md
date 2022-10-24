@@ -29,6 +29,8 @@ Or download zip file from [here](https://huggingface.co/datasets/yfszzx/inspirat
 
 \<stable-diffusion-webui project path\>/extensions/stable-diffusion-webui-inspiration
 
+ and restart webui, and enjoy the joy of creation!
+
  [See here for more install details]( https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions)
 
- and restart webui, and enjoy the joy of creation!
+
