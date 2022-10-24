@@ -8,7 +8,7 @@ You can filter artists or genre's by keyword, collect the style to favorites, or
 
 All the pictures are created by a script named "Create inspiration images" in the txt2img page and the artist's and genre's names come from the following repository: https://github.com/pharmapsychotic/clip-interrogator/tree/main/data
 
-There are about 6000 artists and art styles in these files. This takes server hours depending on your GPU type and how many pictures  you generate for each artist/style
+There are about 6000 artists and art styles in these files. This takes server hours depending on your GPU type and how many pictures you generate for each artist/style.
 
 You can also download generated pictures from the following: https://huggingface.co/datasets/yfszzx/inspiration
 
@@ -18,7 +18,7 @@ You can also download generated pictures from the following: https://huggingface
 - Restart your stable-diffusion-webui, you will see the new tab "Inspiration"
 
 - Run the "Create inspiration images" script inside the "txt2img" page to create images.
-- Optionally you can download the zip file from [here](https://huggingface.co/datasets/yfszzx/inspiration/resolve/main/inspiration.zip) and unzip this file to: \<stable-diffusion-webui project path\>/extensions/stable-diffusion-webui-inspiration
+- Optionally, you can download the zip file from [here](https://huggingface.co/datasets/yfszzx/inspiration/resolve/main/inspiration.zip) and unzip this file to: \<stable-diffusion-webui project path\>/extensions/stable-diffusion-webui-inspiration
 - Restart webui and experience the joy of creation!
 
- [See here for more install details]( https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions)
+ [Look here for more install details](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions)
