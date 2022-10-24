@@ -1,36 +1,24 @@
 # stable-diffusion-webui-inspiration
 This an extension for [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
-Randomly display the pictures of the artist's or artistic genres typical style,  more pictures of this artist or genre is displayed after selecting .
-So you don't have to worry about how hard it is to choose the right style of art when you create
+Randomly display pictures of the artist's or artistic genre's typical style. More pictures for this artist or genre are shown after selecting, So you don't have to worry about how hard it is to choose the right art style when you create.
+
 ![image](https://s6.jpg.cm/2022/10/22/PJYoNL.png)
-you can filter artist's or  genres by keyword, collect the style to faveries, or shield the style you don't like.
-you can also send the style name to the txt2img or img2img prompt. 
+You can filter artists or genre's by keyword, collect the style to favorites, or shield the style you don't like. You can also send the style name to the txt2img or img2img prompt.
 
-All the pictures is created by a script  named  "Create inspiration images" in txt2img page, the artists and  genres names come from the repository:
-https://github.com/pharmapsychotic/clip-interrogator/tree/main/data
+All the pictures are created by a script named "Create inspiration images" in the txt2img page and the artist's and genre's names come from the following repository: https://github.com/pharmapsychotic/clip-interrogator/tree/main/data
 
-There about 6000 artists and art styles in these files. This takes server hours depending on your GPU type and how many pictures  you generate for each artist/style
+There are about 6000 artists and art styles in these files. This takes server hours depending on your GPU type and how many pictures  you generate for each artist/style
 
-You can also download generated pictures from here:
-
-https://huggingface.co/datasets/yfszzx/inspiration
+You can also download generated pictures from the following: https://huggingface.co/datasets/yfszzx/inspiration
 
 ## Install
-go to directory \<stable-diffusion-webui project path\>/extensions , run command:
+- Go to the directory: \<stable-diffusion-webui project path\>/extensions
+- Run this command: `git clone https://github.com/yfszzx/stable-diffusion-webui-inspiration`
+- Restart your stable-diffusion-webui, you will see the new tab "Inspiration"
 
-`git clone https://github.com/yfszzx/stable-diffusion-webui-inspiration `
-
-and restart your stable-diffusion-webui, then you can see the new tab "Inspiraion"
-
-Run the "Create inspiration images" script in page "txt2img" to create images.
-
-Or download zip file from [here](https://huggingface.co/datasets/yfszzx/inspiration/resolve/main/inspiration.zip) ,unzip this file to:
-
-\<stable-diffusion-webui project path\>/extensions/stable-diffusion-webui-inspiration
-
- and restart webui, and enjoy the joy of creation!
+- Run the "Create inspiration images" script inside the "txt2img" page to create images.
+- Optionally you can download the zip file from [here](https://huggingface.co/datasets/yfszzx/inspiration/resolve/main/inspiration.zip) and unzip this file to: \<stable-diffusion-webui project path\>/extensions/stable-diffusion-webui-inspiration
+- Restart webui and experience the joy of creation!
 
  [See here for more install details]( https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions)
-
-
