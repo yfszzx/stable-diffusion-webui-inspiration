@@ -17,9 +17,9 @@ You can also download generated pictures from here:
 https://huggingface.co/datasets/yfszzx/inspiration
 
 ## Install
-Run command:
+go to directory \<stable-diffusion-webui project path\>/extensions , run command:
 
-`git clone https://github.com/yfszzx/stable-diffusion-webui-inspiration <stable-diffusion-webui project path>/extensions`
+`git clone https://github.com/yfszzx/stable-diffusion-webui-inspiration `
 
 and restart your stable-diffusion-webui, then you can see the new tab "Inspiraion"
 
