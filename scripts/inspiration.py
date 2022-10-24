@@ -10,6 +10,7 @@ import modules.ui
 from modules import shared
 from modules import script_callbacks
 inspiration_dir = os.path.join(scripts.basedir(), "inspiration")
+inspiration_system_path = os.path.join(inspiration_dir, "system")
 class Script(scripts.Script):
     def title(self):
         return "Create inspiration images"
@@ -61,7 +62,7 @@ class Script(scripts.Script):
                         filename = os.path.join(artist_path,  format(i, "03d") + ".jpg")
                     img.save(filename, quality=80)
         return processed
-inspiration_system_path = os.path.join(inspiration_dir, "system")
+
 
 
 def read_name_list(file, types=None, keyword=None):
@@ -207,7 +208,7 @@ def on_ui_tabs():
                 unzip the file to <stable-diffusion-webui>/extections/stable-diffusion-webui-inspiration<br>
                 and restart webui, and enjoy the joy of creation!<br></div>
                 """)      
-            return inspiration
+            return  (inspiration, "Inspiration", "inspiration"),
         if not os.path.exists(inspiration_system_path):
             os.mkdir(inspiration_system_path)
         with gr.Row():
