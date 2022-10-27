@@ -42,7 +42,7 @@ class Script(scripts.Script):
             path = os.path.join(inspiration_dir, tp)
             if not os.path.exists(path):
                 os.makedirs(path) 
-            f = open(file.name, "r")
+            f = open(file.name, "r", encoding='utf-8')
             line = f.readline() 
             while len(line) > 0: 
                 name = line.rstrip("\n").split(",")[0]
