@@ -9,6 +9,7 @@ import gradio as gr
 import modules.ui
 from modules import shared
 from modules import script_callbacks
+import modules.generation_parameters_copypaste
 inspiration_dir = os.path.join(scripts.basedir(), "inspiration")
 inspiration_system_path = os.path.join(inspiration_dir, "system")
 class Script(scripts.Script):
@@ -185,9 +186,13 @@ def add_to_prompt(name, prompt):
 def clear_keyword():
     return ""
 
-def on_ui_tabs():     
-    txt2img_prompt = modules.ui.txt2img_paste_fields[0][0]
-    img2img_prompt = modules.ui.img2img_paste_fields[0][0]
+def on_ui_tabs():  
+    try:   
+        txt2img_prompt = modules.ui.txt2img_paste_fields[0][0]
+        img2img_prompt = modules.ui.img2img_paste_fields[0][0]
+    except:
+        txt2img_prompt = modules.generation_parameters_copypaste.paste_fields["txt2img"]["fields"][0][0]
+        img2img_prompt = modules.generation_parameters_copypaste.paste_fields["img2img"]["fields"][0][0]
     with gr.Blocks(analytics_enabled=False) as inspiration:
         flag = os.path.exists(inspiration_dir)        
         if flag:
