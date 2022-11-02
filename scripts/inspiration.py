@@ -187,12 +187,8 @@ def clear_keyword():
     return ""
 
 def on_ui_tabs():  
-    try:   
-        txt2img_prompt = modules.ui.txt2img_paste_fields[0][0]
-        img2img_prompt = modules.ui.img2img_paste_fields[0][0]
-    except:
-        txt2img_prompt = modules.generation_parameters_copypaste.paste_fields["txt2img"]["fields"][0][0]
-        img2img_prompt = modules.generation_parameters_copypaste.paste_fields["img2img"]["fields"][0][0]
+    txt2img_prompt = modules.ui.txt2img_paste_fields[0][0]
+    img2img_prompt = modules.ui.img2img_paste_fields[0][0]
     with gr.Blocks(analytics_enabled=False) as inspiration:
         flag = os.path.exists(inspiration_dir)        
         if flag:
@@ -258,7 +254,7 @@ def on_ui_tabs():
         send_to_txt2img.click(collect_click, inputs=[name], outputs=[warning])
         send_to_img2img.click(collect_click, inputs=[name], outputs=[warning])
         send_to_txt2img.click(None, _js='switch_to_txt2img', inputs=None, outputs=None)
-        send_to_img2img.click(None, _js="switch_to_img2img_img2img", inputs=None, outputs=None)
+        send_to_img2img.click(None, _js="switch_to_img2img", inputs=None, outputs=None)
     return (inspiration, "Inspiration", "inspiration"),
 
 def on_ui_settings():
