@@ -157,7 +157,7 @@ def give_up_click(name):
 def collect_click(name):
     file = os.path.join(inspiration_system_path, "faverites.txt")
     save_name_list(file, name)
-    return "Added to faverite list"
+    return "Added to favorite list"
 
 def moveout_click(name, source):
     if source == "Abandoned":
