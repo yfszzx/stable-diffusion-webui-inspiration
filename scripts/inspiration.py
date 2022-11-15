@@ -1,6 +1,7 @@
 import os
 import random
 import csv, os, shutil
+import re
 import modules.scripts as scripts
 from modules import processing, shared, sd_samplers, images
 from modules.processing import Processed
@@ -21,19 +22,13 @@ class Script(scripts.Script):
 
     def ui(self, is_img2img):
         file = gr.Files(label="Artist or styles name list. '.txt' files with one name per line",)
-        with gr.Row():
-            prefix = gr.Textbox("a painting in", label="Prompt words before artist or style name", file_count="multiple")
-            suffix= gr.Textbox("style", label="Prompt words after artist or style name")
-        negative_prompt = gr.Textbox("picture frame, portrait photo", label="Negative Prompt")
-        with gr.Row():
-            batch_size = gr.Number(1, label="Batch size")
-            batch_count = gr.Number(2, label="Batch count")            
-        return [batch_size, batch_count, prefix, suffix, negative_prompt, file]
+        prompt_placeholder = gr.Textbox("{inspiration}", label="Prompt Placeholder")
+        return [prompt_placeholder, file]
 
-    def run(self, p, batch_size, batch_count, prefix, suffix, negative_prompt, files):
-        p.batch_size = int(batch_size)
-        p.n_iterint = int(batch_count)
-        p.negative_prompt = negative_prompt        
+    def run(self, p, prompt_placeholder, files):
+        if not re.search(prompt_placeholder, p.prompt):
+            raise Exception("Missing " + prompt_placeholder + " in prompt")
+        original_prompt = p.prompt
         p.do_not_save_samples = True
         p.do_not_save_grid = True        
         for file in files:
@@ -52,7 +47,7 @@ class Script(scripts.Script):
                     os.mkdir(artist_path)  
                 if len(os.listdir(artist_path)) >= opts.inspiration_max_samples:
                     continue
-                p.prompt = f"{prefix} {name} {suffix}"
+                p.prompt = re.sub(prompt_placeholder, name, original_prompt)
                 print(p.prompt)
                 processed = processing.process_images(p)
                 for img in  processed.images:
