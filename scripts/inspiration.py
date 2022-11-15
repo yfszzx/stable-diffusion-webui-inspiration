@@ -46,6 +46,7 @@ class Script(scripts.Script):
                 if not os.path.exists(artist_path):
                     os.mkdir(artist_path)  
                 if len(os.listdir(artist_path)) >= opts.inspiration_max_samples:
+                    print("Limit of " + str(opts.inspiration_max_samples) + " of '" + name + "' in " + tp + " is reached. Limit can be changed in the settings.")
                     continue
                 p.prompt = re.sub(prompt_placeholder, name, original_prompt)
                 print(p.prompt)
