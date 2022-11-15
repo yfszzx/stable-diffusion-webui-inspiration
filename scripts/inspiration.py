@@ -11,8 +11,11 @@ import modules.ui
 from modules import shared
 from modules import script_callbacks
 import modules.generation_parameters_copypaste
+
 inspiration_dir = os.path.join(scripts.basedir(), "inspiration")
 inspiration_system_path = os.path.join(inspiration_dir, "system")
+
+
 class Script(scripts.Script):
     def title(self):
         return "Create inspiration images"
@@ -30,15 +33,15 @@ class Script(scripts.Script):
             raise Exception("Missing " + prompt_placeholder + " in prompt")
         original_prompt = p.prompt
         p.do_not_save_samples = True
-        p.do_not_save_grid = True        
+        p.do_not_save_grid = True
         for file in files:
             tp = file.orig_name.split(".")[0]
             print("Process " + tp + "..")
             path = os.path.join(inspiration_dir, tp)
             if not os.path.exists(path):
-                os.makedirs(path) 
+                os.makedirs(path)
             f = open(file.name, "r", encoding='utf-8')
-            line = f.readline() 
+            line = f.readline()
             while len(line) > 0:
                 line = line.rstrip("\n")
                 # Ignore headline of artist.csv from automatic1111 repository
@@ -53,29 +56,28 @@ class Script(scripts.Script):
                 line = f.readline()
                 artist_path = os.path.join(path, name)
                 if not os.path.exists(artist_path):
-                    os.mkdir(artist_path)  
+                    os.mkdir(artist_path)
                 if len(os.listdir(artist_path)) >= opts.inspiration_max_samples:
                     print("Limit of " + str(opts.inspiration_max_samples) + " of '" + name + "' in " + tp + " is reached. Limit can be changed in the settings.")
                     continue
                 p.prompt = re.sub(prompt_placeholder, name, original_prompt)
                 print(p.prompt)
                 processed = processing.process_images(p)
-                for img in  processed.images:
+                for img in processed.images:
                     i = 0
-                    filename = os.path.join(artist_path,  format(0, "03d") + ".jpg")
+                    filename = os.path.join(artist_path, format(0, "03d") + ".jpg")
                     while os.path.exists(filename):
                         i += 1
-                        filename = os.path.join(artist_path,  format(i, "03d") + ".jpg")
+                        filename = os.path.join(artist_path, format(i, "03d") + ".jpg")
                     img.save(filename, quality=80)
         return processed
-
 
 
 def read_name_list(file, types=None, keyword=None):
     if not os.path.exists(file):
         return []
     ret = []
-    f = open(file, "r")    
+    f = open(file, "r")
     line = f.readline()
     while len(line) > 0:
         line = line.rstrip("\n")
@@ -88,11 +90,13 @@ def read_name_list(file, types=None, keyword=None):
         line = f.readline()
     return ret
 
-def save_name_list(file, name): 
+
+def save_name_list(file, name):
     name_list = read_name_list(file)
     if name not in name_list:
         with open(file, "a") as f:
             f.write(name + "\n")
+
 
 def get_types_list():
     files = os.listdir(inspiration_dir)
@@ -108,6 +112,7 @@ def get_types_list():
         types.append(x)
     return types
 
+
 def get_inspiration_images(source, types, keyword):
     keyword = keyword.strip(" ").lower()
     get_num = int(opts.inspiration_rows_num * opts.inspiration_cols_num)
@@ -117,13 +122,13 @@ def get_inspiration_images(source, types, keyword):
     elif source == "Abandoned":
         names = read_name_list(os.path.join(inspiration_system_path, "abandoned.txt"), types, keyword)
         names = random.sample(names, get_num) if len(names) > get_num else names
-    elif source == "Exclude abandoned":        
-        abandoned = read_name_list(os.path.join(inspiration_system_path, "abandoned.txt"), types, keyword)  
+    elif source == "Exclude abandoned":
+        abandoned = read_name_list(os.path.join(inspiration_system_path, "abandoned.txt"), types, keyword)
         all_names = []
         for tp in types:
             name_list = os.listdir(os.path.join(inspiration_dir, tp))
             all_names += [os.path.join(tp, x) for x in name_list if keyword in x.lower()]
-        
+
         if len(all_names) > get_num:
             names = []
             while len(names) < get_num:
@@ -142,11 +147,12 @@ def get_inspiration_images(source, types, keyword):
     for a in names:
         image_path = os.path.join(inspiration_dir, a)
         images = os.listdir(image_path)
-        if len(images) > 0:        
+        if len(images) > 0:
             image_list.append((os.path.join(image_path, random.choice(images)), a))
         else:
             print(image_path)
     return image_list, names
+
 
 def select_click(index, name_list):
     name = name_list[int(index)]
@@ -154,15 +160,18 @@ def select_click(index, name_list):
     images = os.listdir(path)
     return name, [os.path.join(path, x) for x in images], ""
 
+
 def give_up_click(name):
     file = os.path.join(inspiration_system_path, "abandoned.txt")
     save_name_list(file, name)
     return "Added to abandoned list"
-   
+
+
 def collect_click(name):
     file = os.path.join(inspiration_system_path, "faverites.txt")
     save_name_list(file, name)
     return "Added to favorite list"
+
 
 def moveout_click(name, source):
     if source == "Abandoned":
@@ -179,29 +188,34 @@ def moveout_click(name, source):
                 f.write(a + "\n")
     return f"Moved out {name} from {source} list"
 
+
 def source_change(source):
     if source in ["Abandoned", "Favorites"]:
         return gr.update(visible=True), []
     else:
         return gr.update(visible=False), []
+
+
 def add_to_prompt(name, prompt):
     name = os.path.basename(name)
     return prompt + "," + name
 
+
 def clear_keyword():
     return ""
 
-def on_ui_tabs():  
+
+def on_ui_tabs():
     txt2img_prompt = modules.ui.txt2img_paste_fields[0][0]
     img2img_prompt = modules.ui.img2img_paste_fields[0][0]
     with gr.Blocks(analytics_enabled=False) as inspiration:
-        flag = os.path.exists(inspiration_dir)        
+        flag = os.path.exists(inspiration_dir)
         if flag:
             types = get_types_list()
             flag = len(types) > 0
         else:
             os.makedirs(inspiration_dir)
-        if not flag:            
+        if not flag:
             gr.HTML("""
                 <div align='center' width="50%"><h2>To activate inspiration function, you need get "inspiration" images first. </h2><br>
                 You can create these images by run "Create inspiration images" script in txt2img page, <br> you can get the artists or art styles list from here<br>
@@ -213,40 +227,38 @@ def on_ui_tabs():
                 <a href="https://huggingface.co/datasets/yfszzx/inspiration">https://huggingface.co/datasets/yfszzx/inspiration</a><br>
                 unzip the file to <stable-diffusion-webui>/extections/stable-diffusion-webui-inspiration<br>
                 and restart webui, and enjoy the joy of creation!<br></div>
-                """)      
-            return  (inspiration, "Inspiration", "inspiration"),
+                """)
+            return (inspiration, "Inspiration", "inspiration"),
         if not os.path.exists(inspiration_system_path):
             os.mkdir(inspiration_system_path)
         with gr.Row():
-            with gr.Column(scale=2):                
+            with gr.Column(scale=2):
                 inspiration_gallery = gr.Gallery(show_label=False, elem_id="inspiration_gallery").style(grid=opts.inspiration_cols_num, height='auto')
             with gr.Column(scale=1):
                 types = gr.CheckboxGroup(choices=types, value=types)
-                with gr.Row(): 
+                with gr.Row():
                     source = gr.Dropdown(choices=["All", "Favorites", "Exclude abandoned", "Abandoned"], value="Exclude abandoned", label="Source")
-                    keyword = gr.Textbox("", label="Key word")                                                
-                get_inspiration = gr.Button("Get inspiration", elem_id="inspiration_get_button")   
-                name = gr.Textbox(show_label=False, interactive=False)      
-                with gr.Row():                     
+                    keyword = gr.Textbox("", label="Key word")
+                get_inspiration = gr.Button("Get inspiration", elem_id="inspiration_get_button")
+                name = gr.Textbox(show_label=False, interactive=False)
+                with gr.Row():
                     send_to_txt2img = gr.Button('to txt2img')
                     send_to_img2img = gr.Button('to img2img')
-                    collect = gr.Button('Collect')     
+                    collect = gr.Button('Collect')
                     give_up = gr.Button("Don't show again")
                     moveout = gr.Button("Move out", visible=False)
                 warning = gr.HTML()
-                style_gallery = gr.Gallery(show_label=False).style(grid=2, height='auto') 
-                    
-               
-                
+                style_gallery = gr.Gallery(show_label=False).style(grid=2, height='auto')
+
         with gr.Row(visible=False):
             select_button = gr.Button('set button', elem_id="inspiration_select_button")
             name_list = gr.State()
-        
+
         get_inspiration.click(get_inspiration_images, inputs=[source, types, keyword], outputs=[inspiration_gallery, name_list])
         keyword.submit(fn=None, _js="inspiration_click_get_button", inputs=None, outputs=None)
         source.change(source_change, inputs=[source], outputs=[moveout, style_gallery])
-        source.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])       
-        types.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])  
+        source.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])
+        types.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])
 
         select_button.click(select_click, _js="inspiration_selected", inputs=[name, name_list], outputs=[name, style_gallery, warning])
         give_up.click(give_up_click, inputs=[name], outputs=[warning])
@@ -262,13 +274,13 @@ def on_ui_tabs():
         send_to_img2img.click(None, _js="switch_to_img2img", inputs=None, outputs=None)
     return (inspiration, "Inspiration", "inspiration"),
 
+
 def on_ui_settings():
     section = ('inspiration', "Inspiration")
     shared.opts.add_option("inspiration_max_samples", shared.OptionInfo(4, "Maximum number of samples, used to determine which folders to skip when continue running the create script", gr.Slider, {"minimum": 1, "maximum": 20, "step": 1}, section=section))
     shared.opts.add_option("inspiration_rows_num", shared.OptionInfo(4, "Number of rows on the page",  gr.Slider, {"minimum": 4, "maximum": 16, "step": 1}, section=section))
-    shared.opts.add_option( "inspiration_cols_num", shared.OptionInfo(6, "Minimum number of pages per load", gr.Slider, {"minimum": 4, "maximum": 16, "step": 1}, section=section))
+    shared.opts.add_option("inspiration_cols_num", shared.OptionInfo(6, "Minimum number of pages per load", gr.Slider, {"minimum": 4, "maximum": 16, "step": 1}, section=section))
 
 
 script_callbacks.on_ui_settings(on_ui_settings)
 script_callbacks.on_ui_tabs(on_ui_tabs)
-
