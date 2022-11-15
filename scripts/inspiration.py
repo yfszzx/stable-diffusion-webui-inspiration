@@ -39,10 +39,15 @@ class Script(scripts.Script):
                 os.makedirs(path) 
             f = open(file.name, "r", encoding='utf-8')
             line = f.readline() 
-            while len(line) > 0: 
-                name = line.rstrip("\n").split(",")[0]
-                line = f.readline() 
-                artist_path = os.path.join(path, name)  
+            while len(line) > 0:
+                line = line.rstrip("\n")
+                # Ignore headline of artist.csv from automatic1111 repository
+                if line == "artist,score,category":
+                    line = f.readline()
+                    continue
+                name = line.split(",")[0]
+                line = f.readline()
+                artist_path = os.path.join(path, name)
                 if not os.path.exists(artist_path):
                     os.mkdir(artist_path)  
                 if len(os.listdir(artist_path)) >= opts.inspiration_max_samples:
