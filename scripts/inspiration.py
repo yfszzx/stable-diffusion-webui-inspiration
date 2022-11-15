@@ -21,9 +21,9 @@ class Script(scripts.Script):
         return True
 
     def ui(self, is_img2img):
-        file = gr.Files(label="Artist or styles name list. '.txt' files with one name per line",)
+        files = gr.Files(label="Artist or styles name list. '.txt' files with one name per line")
         prompt_placeholder = gr.Textbox("{inspiration}", label="Prompt Placeholder")
-        return [prompt_placeholder, file]
+        return [prompt_placeholder, files]
 
     def run(self, p, prompt_placeholder, files):
         if not re.search(prompt_placeholder, p.prompt):
