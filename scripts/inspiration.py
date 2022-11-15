@@ -33,7 +33,7 @@ class Script(scripts.Script):
         p.do_not_save_grid = True        
         for file in files:
             tp = file.orig_name.split(".")[0]
-            print(tp)
+            print("Process " + tp + "..")
             path = os.path.join(inspiration_dir, tp)
             if not os.path.exists(path):
                 os.makedirs(path) 
