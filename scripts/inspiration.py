@@ -45,7 +45,11 @@ class Script(scripts.Script):
                 if line == "artist,score,category":
                     line = f.readline()
                     continue
-                name = line.split(",")[0]
+                double_quotes_match = re.search('^".+"', line)
+                if double_quotes_match:
+                    name = double_quotes_match.group()[1:len(double_quotes_match.group()) - 1]
+                else:
+                    name = line.split(",")[0]
                 line = f.readline()
                 artist_path = os.path.join(path, name)
                 if not os.path.exists(artist_path):
