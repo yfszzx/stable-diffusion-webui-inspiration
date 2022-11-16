@@ -25,7 +25,7 @@ class Script(scripts.Script):
 
     def ui(self, is_img2img):
         files = gr.Files(label="Artist or styles name list. '.txt' files with one name per line")
-        prompt_placeholder = gr.Textbox("{inspiration}", label="Prompt Placeholder")
+        prompt_placeholder = gr.Textbox("{inspiration}", label="Prompt Placeholder, which can be used at the top of prompt input")
         return [prompt_placeholder, files]
 
     def run(self, p, prompt_placeholder, files):
