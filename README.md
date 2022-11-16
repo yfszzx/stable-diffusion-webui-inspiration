@@ -22,3 +22,15 @@ You can also download generated pictures from the following: https://huggingface
 - Restart webui and experience the joy of creation!
 
  [Look here for more install details](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions)
+
+## Using txt2img inspiration
+- Open the txt2img tab
+- At the bottom of Script select "Create inspiration images"
+- Upload a text file (e.g. the artist.csv from the root directory)
+  - The header "artist,score,category" is ignored
+  - If the content is separated by , the first block (everything up to the first ,) is taken
+  - If the first block is surrounded by ", the enclosed content will be taken
+- Choose a placeholder, the default is {inspiration}
+- The placeholder can be used at the top of the prompt e.g. "a painting in {inspiration} style"
+
+![image](etc/txt2img_tab.png)
