@@ -117,7 +117,7 @@ def get_inspiration_images(source, types, keyword):
     keyword = keyword.strip(" ").lower()
     get_num = int(opts.inspiration_rows_num * opts.inspiration_cols_num)
     if source == "Favorites":
-        names = read_name_list(os.path.join(inspiration_system_path, "faverites.txt"), types, keyword)
+        names = read_name_list(os.path.join(inspiration_system_path, "favorites.txt"), types, keyword)
         names = random.sample(names, get_num) if len(names) > get_num else names
     elif source == "Abandoned":
         names = read_name_list(os.path.join(inspiration_system_path, "abandoned.txt"), types, keyword)
@@ -168,7 +168,7 @@ def give_up_click(name):
 
 
 def collect_click(name):
-    file = os.path.join(inspiration_system_path, "faverites.txt")
+    file = os.path.join(inspiration_system_path, "favorites.txt")
     save_name_list(file, name)
     return "Added to favorite list"
 
@@ -177,7 +177,7 @@ def moveout_click(name, source):
     if source == "Abandoned":
         file = os.path.join(inspiration_system_path, "abandoned.txt")
     elif source == "Favorites":
-        file = os.path.join(inspiration_system_path, "faverites.txt")
+        file = os.path.join(inspiration_system_path, "favorites.txt")
     else:
         return None
     name_list = read_name_list(file)
