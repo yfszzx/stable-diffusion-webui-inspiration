@@ -219,7 +219,7 @@ def on_ui_tabs():
             gr.HTML("""
                 <div align='center' width="50%"><h2>To activate inspiration function, you need get "inspiration" images first. </h2><br>
                 You can create these images by run "Create inspiration images" script in txt2img page, <br> you can get the artists or art styles list from here<br>
-                <a href="https://github.com/pharmapsychotic/clip-interrogator/tree/main/data">https://github.com/pharmapsychotic/clip-interrogator/tree/main/data</a><br>
+                <a href="https://github.com/pharmapsychotic/clip-interrogator/tree/main/clip_interrogator/data">https://github.com/pharmapsychotic/clip-interrogator/tree/main/clip_interrogator/data</a><br>
                 download these files, and select these files in the "Create inspiration images" script UI<br>
                 There about 6000 artists and art styles in these files. <br>This takes server hours depending on your GPU type and how many pictures  you generate for each artist/style
                 <br>I suggest at least four images for each<br><br><br>
