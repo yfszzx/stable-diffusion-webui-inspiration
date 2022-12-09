@@ -128,15 +128,12 @@ def get_inspiration_images(source, types, keyword):
         for tp in types:
             name_list = os.listdir(os.path.join(inspiration_dir, tp))
             all_names += [os.path.join(tp, x) for x in name_list if keyword in x.lower()]
-
-        if len(all_names) > get_num:
-            names = []
-            while len(names) < get_num:
-                name = random.choice(all_names)
-                if name not in abandoned:
-                    names.append(name)
-        else:
-            names = all_names
+        names = []
+        while len(names) < get_num and len(all_names) > 0:
+            name = random.choice(all_names)
+            if name not in abandoned and name not in names:
+                names.append(name)
+                all_names.remove(name)
     else:
         all_names = []
         for tp in types:
