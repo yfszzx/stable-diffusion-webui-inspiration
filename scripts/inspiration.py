@@ -198,7 +198,7 @@ def source_change(source):
 
 def add_to_prompt(name, prompt):
     name = os.path.basename(name)
-    return prompt + "," + name
+    return prompt + ", " + name
 
 
 def clear_keyword():
@@ -242,16 +242,16 @@ def on_ui_tabs():
                 get_inspiration = gr.Button("Get inspiration", elem_id="inspiration_get_button")
                 name = gr.Textbox(show_label=False, interactive=False)
                 with gr.Row():
-                    send_to_txt2img = gr.Button('to txt2img')
-                    send_to_img2img = gr.Button('to img2img')
-                    collect = gr.Button('Collect')
+                    send_to_txt2img = gr.Button("to txt2img")
+                    send_to_img2img = gr.Button("to img2img")
+                    collect = gr.Button("Collect")
                     give_up = gr.Button("Don't show again")
                     moveout = gr.Button("Move out", visible=False)
                 warning = gr.HTML()
                 style_gallery = gr.Gallery(show_label=False).style(grid=2, height='auto')
 
         with gr.Row(visible=False):
-            select_button = gr.Button('set button', elem_id="inspiration_select_button")
+            select_button = gr.Button("set button", elem_id="inspiration_select_button")
             name_list = gr.State()
 
         get_inspiration.click(get_inspiration_images, inputs=[source, types, keyword], outputs=[inspiration_gallery, name_list])
@@ -270,7 +270,7 @@ def on_ui_tabs():
         send_to_img2img.click(add_to_prompt, inputs=[name, img2img_prompt], outputs=[img2img_prompt])
         send_to_txt2img.click(collect_click, inputs=[name], outputs=[warning])
         send_to_img2img.click(collect_click, inputs=[name], outputs=[warning])
-        send_to_txt2img.click(None, _js='switch_to_txt2img', inputs=None, outputs=None)
+        send_to_txt2img.click(None, _js="switch_to_txt2img", inputs=None, outputs=None)
         send_to_img2img.click(None, _js="switch_to_img2img", inputs=None, outputs=None)
     return (inspiration, "Inspiration", "inspiration"),
 
