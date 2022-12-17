@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (node) {
                 node.style.display = "None";
             } 
-            gallery.querySelectorAll('img').forEach(function(e){    
+            gallery.querySelectorAll("img").forEach(function(e){    
                 e.onclick = inspiration_image_click
             });
         }
