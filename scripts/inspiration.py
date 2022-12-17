@@ -225,7 +225,7 @@ def on_ui_tabs():
                 <br>I suggest at least four images for each<br><br><br>
                 <h2>You can also download generated pictures from here:</h2><br>
                 <a href="https://huggingface.co/datasets/yfszzx/inspiration">https://huggingface.co/datasets/yfszzx/inspiration</a><br>
-                unzip the file to <stable-diffusion-webui>/extections/stable-diffusion-webui-inspiration<br>
+                unzip the file to <stable-diffusion-webui>/extensions/stable-diffusion-webui-inspiration<br>
                 and restart webui, and enjoy the joy of creation!<br></div>
                 """)
             return (inspiration, "Inspiration", "inspiration"),
