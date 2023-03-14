@@ -144,7 +144,7 @@ def get_inspiration_images(source, types, keyword):
             all_names += [os.path.join(tp, x) for x in name_list if keyword in x.lower()]
         names = random.sample(all_names, get_num) if len(all_names) > get_num else all_names
     image_list = []
-    for a in names:
+    for a in [ name for name in names if not name.endswith(".DS_Store") ]:
         image_path = os.path.join(inspiration_dir, a)
         images = os.listdir(image_path)
         if len(images) > 0:
