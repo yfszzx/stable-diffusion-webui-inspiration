@@ -1,5 +1,5 @@
 function public_image_index_in_gallery(item, gallery){
-    var imgs = gallery.querySelectorAll("img.h-full")    
+    var imgs = gallery.querySelectorAll("img")    
     var index;
     var i = 0;
     imgs.forEach(function(e){
