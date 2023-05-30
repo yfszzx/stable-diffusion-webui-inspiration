@@ -14,7 +14,7 @@ import modules.generation_parameters_copypaste
 
 inspiration_dir = os.path.join(scripts.basedir(), "inspiration")
 inspiration_system_path = os.path.join(inspiration_dir, "system")
-
+GLOBAL_IMAGE_LIST = None
 
 class Script(scripts.Script):
     def title(self):
@@ -151,11 +151,15 @@ def get_inspiration_images(source, types, keyword):
             image_list.append((os.path.join(image_path, random.choice(images)), a))
         else:
             print(image_path)
+
+    global GLOBAL_IMAGE_LIST
+    GLOBAL_IMAGE_LIST = names.copy()
+    
     return image_list, names
 
 
-def select_click(index, name_list):
-    name = name_list[int(index)]
+def select_click(index):
+    name = GLOBAL_IMAGE_LIST[int(index)]
     path = os.path.join(inspiration_dir, name)
     images = os.listdir(path)
     return name, [os.path.join(path, x) for x in images], ""
@@ -260,7 +264,7 @@ def on_ui_tabs():
         source.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])
         types.change(fn=clear_keyword, _js="inspiration_click_get_button", inputs=None, outputs=[keyword])
 
-        select_button.click(select_click, _js="inspiration_selected", inputs=[name, name_list], outputs=[name, style_gallery, warning])
+        select_button.click(select_click, _js="inspiration_selected", inputs=[name], outputs=[name, style_gallery, warning])
         give_up.click(give_up_click, inputs=[name], outputs=[warning])
         collect.click(collect_click, inputs=[name], outputs=[warning])
         moveout.click(moveout_click, inputs=[name, source], outputs=[warning])
